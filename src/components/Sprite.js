@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 
 import {store} from '../index';
 import {changeSpriteX, changeSpriteY, refreshSprite, changeLevel} from '../actions/sprite';
@@ -17,20 +16,14 @@ class Sprite extends Component {
     };
 
     loop () {
-        if (this.props.sprite.keys['ArrowRight'] && this.props.sprite.x<779) {store.dispatch(changeSpriteX(5))}
-        if (this.props.sprite.keys['ArrowLeft'] && this.props.sprite.x>0) {store.dispatch(changeSpriteX(-5))}
-        if (this.props.sprite.keys['ArrowDown'] && this.props.sprite.y<380) {store.dispatch(changeSpriteY(5))}
-        if (this.props.sprite.keys['ArrowUp'] && this.props.sprite.y>0) {store.dispatch(changeSpriteY(-5))}
+        if (this.props.keys['ArrowRight'] && this.props.x<779) {store.dispatch(changeSpriteX(5))}
+        if (this.props.keys['ArrowLeft'] && this.props.x>0) {store.dispatch(changeSpriteX(-5))}
+        if (this.props.keys['ArrowDown'] && this.props.y<380) {store.dispatch(changeSpriteY(5))}
+        if (this.props.keys['ArrowUp'] && this.props.y>0) {store.dispatch(changeSpriteY(-5))}
 
-        if (this.props.sprite.x+20>700 && this.props.sprite.y+20>180 && this.props.sprite.y-20<220) {
+        if (this.props.x+20>700 && this.props.y+20>180 && this.props.y-20<220) {
             store.dispatch(refreshSprite());
             store.dispatch(changeLevel(1));
-        }
-
-        if (this.props.sprite.x+20>this.props.enemy.x && this.props.sprite.x-20<this.props.enemy.x &&
-            this.props.sprite.y+20>this.props.enemy.y && this.props.sprite.y-20<this.props.enemy.y) {
-            alert('Game over');
-            store.dispatch(refreshSprite());
         }
 
         animation = requestAnimationFrame(this.loop.bind(this));
@@ -42,8 +35,8 @@ class Sprite extends Component {
             width: 20,
             height: 20,
             position: 'absolute',
-            top: this.props.sprite.y,
-            left: this.props.sprite.x,
+            top: this.props.y,
+            left: this.props.x,
             borderRadius: 4
         };
         return (
@@ -52,6 +45,5 @@ class Sprite extends Component {
     }
 }
 
-Sprite = connect((state) => ({sprite: state.sprite, enemy: state.enemy}))(Sprite);
 
 export default Sprite;

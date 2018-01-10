@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
 import sprite from './sprite';
-import enemy from './enemy';
+import enemies from './enemies';
 
 export const allReducers = combineReducers({
     sprite,
-    enemy
+    enemies
 });

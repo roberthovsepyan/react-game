@@ -20,6 +20,8 @@ export default function (state={keys: {}, x: 0, y: 190, level: 1}, action) {
             return {...state, x: 0, y: 190, keys: {}};
         case 'CHANGE_LEVEL':
             return {...state, level: state.level+action.payload};
+        case 'REFRESH_LEVEL':
+            return {...state, level: 1};
         default:
             return state;
     }

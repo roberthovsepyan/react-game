@@ -44,3 +44,9 @@ export const changeLevel = (num) => {
         payload: num
     }
 };
+
+export const refreshLevel = () => {
+    return {
+        type: 'REFRESH_LEVEL'
+    }
+};
