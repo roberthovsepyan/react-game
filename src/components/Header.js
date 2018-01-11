@@ -22,11 +22,17 @@ class Header extends Component {
     render () {
         const style = {
             marginBottom: 30,
-            textAlign: 'center'
+            textAlign: 'center',
+        };
+
+        const headingStyle = {
+            marginBottom: 30,
+            color: '#1A237E'
         };
 
         return (
             <div style={style}>
+                <h1 style={headingStyle}>React Game</h1>
                 {this.renderLevels()}
             </div>
         );

@@ -12,9 +12,15 @@ export const disableKey = (key) => {
     }
 };
 
-export const disableOutline = () => {
+export const addBorder = () => {
     return {
-        type: 'DISABLE_OUTLINE'
+        type: 'ADD_BORDER'
+    }
+};
+
+export const removeBorder = () => {
+    return {
+        type: 'REMOVE_BORDER'
     }
 };
 

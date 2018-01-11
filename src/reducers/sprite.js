@@ -1,7 +1,9 @@
 export default function (state={keys: {}, x: 0, y: 190, level: 1}, action) {
     switch (action.type) {
-        case 'DISABLE_OUTLINE':
-            return {...state, outline: 'none'};
+        case 'ADD_BORDER':
+            return {...state, outline: 'none', border: 'solid 3px #311B92'};
+        case 'REMOVE_BORDER':
+            return {...state, border: ''};
         case 'ADD_KEY': {
             let keys = {...state.keys};
             keys[action.payload] = true;

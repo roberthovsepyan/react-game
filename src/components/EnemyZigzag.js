@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import {store} from '../index';
 import {changeEnemyY, changeEnemyVY, changeEnemyX, changeEnemyVX} from '../actions/enemies';
-import {refreshSprite, refreshLevel} from '../actions/sprite';
 
 let animation;
 
@@ -25,13 +24,6 @@ class EnemyZigzag extends Component {
         }
         store.dispatch(changeEnemyY(this.props.id));
         store.dispatch(changeEnemyX(this.props.id));
-
-        if (this.props.spriteX+20>this.props.x && this.props.spriteX-20<this.props.x &&
-            this.props.spriteY+20>this.props.y && this.props.spriteY-20<this.props.y) {
-            alert('Game over');
-            store.dispatch(refreshSprite());
-            store.dispatch(refreshLevel());
-        }
 
         animation = requestAnimationFrame(this.loop.bind(this));
     };
