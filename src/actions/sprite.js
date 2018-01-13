@@ -12,18 +12,6 @@ export const disableKey = (key) => {
     }
 };
 
-export const addBorder = () => {
-    return {
-        type: 'ADD_BORDER'
-    }
-};
-
-export const removeBorder = () => {
-    return {
-        type: 'REMOVE_BORDER'
-    }
-};
-
 export const changeSpriteX = (num) => {
     return {
         type: 'CHANGE_SPRITE_X',

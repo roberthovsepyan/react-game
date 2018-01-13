@@ -2,25 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {store} from '../index';
-import {addKey, disableKey, addBorder, removeBorder} from '../actions/sprite';
-import {createEnemy} from '../actions/enemies';
+import {addKey, disableKey} from '../actions/sprite';
+import {addBorder, removeBorder} from '../actions/utilities';
 import Sprite from './Sprite';
 import EnemyStandard from './EnemyStandard';
 import EnemyZigzag from './EnemyZigzag';
+import EnemyLong from './EnemyLong';
 
 class Board extends Component {
-
-    componentDidMount () {
-        this.createEnemies();
-    };
-
-    createEnemies () {
-        store.dispatch(createEnemy({x: 400, y: 0, vy: 1, speedY: 10, id: 'standard_1', level: 1}));
-        store.dispatch(createEnemy({x: 200, startX: 200, y: 0, vy: 1, vx: 1, speedY: 5, speedX: 2, id: 'zigzag_1', level: 1}));
-        store.dispatch(createEnemy({x: 300, startX:300, y: 0, vy: 1, vx: 1, speedY: 15, speedX: 5, id: 'zigzag_2', level: 2}));
-        store.dispatch(createEnemy({x: 500, y: 0, vy: 1, speedY: 20, id: 'standard_2', level: 2}));
-    };
-
     handleDown (e) {
         //so that arrow keys don't scroll the page
         if (e.key==='ArrowUp' || e.key==='ArrowDown' || e.key==='ArrowLeft' || e.key==='ArrowRight') {
@@ -51,6 +40,9 @@ class Board extends Component {
                 else if (enemy.id.split('_')[0] === 'zigzag') {
                     enemies.push(<EnemyZigzag id={enemy.id} key={enemy.id} x={enemy.x} y={enemy.y} startX={enemy.startX}/>)
                 }
+                else if (enemy.id.split('_')[0] === 'long') {
+                    enemies.push(<EnemyLong id={enemy.id} key={enemy.id} x={enemy.x} y={enemy.y}/>)
+                }
             }
         });
         return enemies;
@@ -63,8 +55,8 @@ class Board extends Component {
             height: 400,
             borderRadius: 4,
             position: 'relative',
-            outline: this.props.sprite.outline,
-            border: this.props.sprite.border
+            outline: this.props.utilities.outline,
+            border: this.props.utilities.border
         };
 
         const nextLvlStyle = {
@@ -80,6 +72,7 @@ class Board extends Component {
             display: 'flex',
             borderRadius: 2
         };
+
         return (
             <div style={style} tabIndex={0} onKeyDown={this.handleDown.bind(this)} onKeyUp={this.handleUp.bind(this)}
                  onFocus={this.handleFocus.bind(this)} onBlur={this.handleBlur.bind(this)}>
@@ -91,6 +84,6 @@ class Board extends Component {
     }
 }
 
-Board = connect((state) => ({sprite: state.sprite, enemies: state.enemies}))(Board);
+Board = connect((state) => ({sprite: state.sprite, enemies: state.enemies, utilities: state.utilities}))(Board);
 
 export default Board;

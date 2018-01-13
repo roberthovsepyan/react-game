@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 
 import {store} from '../index';
-import {changeEnemyY, changeEnemyVY, changeEnemyX, changeEnemyVX} from '../actions/enemies';
+import {changeEnemyY, changeEnemyVY} from '../actions/enemies';
 import Loop from '../Loop';
 
-class EnemyZigzag extends Component {
+class EnemyLong extends Component {
     constructor () {
         super();
         this.Loop = new Loop();
@@ -21,26 +21,22 @@ class EnemyZigzag extends Component {
 
     loop = () => {
         //changing velocity
-        if (this.props.y + 20 >= 400 || this.props.y <= 0) {
+        if (this.props.y + 60 >= 400 || this.props.y <= 0) {
             store.dispatch(changeEnemyVY(this.props.id));
         }
-        if (this.props.x > this.props.startX+30 || this.props.x < this.props.startX-30) {
-            store.dispatch(changeEnemyVX(this.props.id));
-        }
         store.dispatch(changeEnemyY(this.props.id));
-        store.dispatch(changeEnemyX(this.props.id));
     };
 
     render () {
         const style={
-            backgroundColor: 'red',
+            backgroundColor: '#880E4F',
             width: 20,
-            height: 20,
+            height: 60,
             position: 'absolute',
             top: this.props.y,
             left: this.props.x,
             borderRadius: 4,
-            transform: 'rotate(45deg)'
+
         };
 
         return (
@@ -50,4 +46,4 @@ class EnemyZigzag extends Component {
 }
 
 
-export default EnemyZigzag;
+export default EnemyLong;

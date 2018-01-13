@@ -2,26 +2,29 @@ import React, {Component} from 'react';
 
 import {store} from '../index';
 import {changeEnemyY, changeEnemyVY} from '../actions/enemies';
-
-let animation;
+import Loop from '../Loop';
 
 class EnemyStandard extends Component {
+    constructor () {
+        super();
+        this.Loop = new Loop();
+    };
 
     componentDidMount () {
-        this.loop();
+        this.Loop.subscribe(this.loop);
+        this.Loop.start();
     };
 
     componentWillUnmount () {
-        cancelAnimationFrame(animation);
+        this.Loop.stop();
     };
 
-    loop () {
-        if (this.props.y > 380 || this.props.y < 0) {
+    loop = () => {
+        //changing velocity
+        if (this.props.y + 20 >= 400 || this.props.y <= 0) {
             store.dispatch(changeEnemyVY(this.props.id));
         }
         store.dispatch(changeEnemyY(this.props.id));
-
-        animation = requestAnimationFrame(this.loop.bind(this));
     };
 
     render () {

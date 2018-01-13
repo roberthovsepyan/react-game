@@ -6,8 +6,9 @@ import FlatButton from 'material-ui/FlatButton';
 
 import Board from './components/Board';
 import Header from './components/Header';
+import {Instructions} from './components/Instructions';
 import {store} from './index';
-import {closeGameOver, closeGameCompleted} from './actions/dialogs';
+import {closeGameOver, closeGameCompleted} from './actions/utilities';
 
 class App extends Component {
 
@@ -41,11 +42,12 @@ class App extends Component {
             <div style={style}>
                 <Header/>
                 <Board ref='board'/>
-                <Dialog title='Game Over!' actions={gameOver} open={this.props.modals.isGameOver}
+                <Instructions/>
+                <Dialog title='Game Over!' actions={gameOver} open={this.props.utilities.isGameOver}
                         titleStyle={{color: '#311B92'}}>
                     Try again?
                 </Dialog>
-                <Dialog title='Congratulations!' actions={gameCompleted} open={this.props.modals.isGameCompleted}
+                <Dialog title='Congratulations!' actions={gameCompleted} open={this.props.utilities.isGameCompleted}
                         titleStyle={{color: '#311B92'}}>
                     You've completed the game. Play again?
                 </Dialog>
@@ -54,6 +56,6 @@ class App extends Component {
     }
 }
 
-App = connect((state) => ({modals: state.modals}))(App);
+App = connect((state) => ({utilities: state.utilities}))(App);
 
 export default App;

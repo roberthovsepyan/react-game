@@ -25,10 +25,3 @@ export const changeEnemyVX = (id) => {
         payload: id
     }
 };
-
-export const createEnemy = (enemy) => {
-    return {
-        type: 'CREATE_ENEMY',
-        payload: enemy
-    }
-};

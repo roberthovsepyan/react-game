@@ -3,21 +3,25 @@ import {connect} from 'react-redux';
 
 import {store} from '../index';
 import {changeSpriteX, changeSpriteY, refreshSprite, changeLevel, refreshLevel} from '../actions/sprite';
-import {openGameOver, openGameCompleted} from '../actions/dialogs';
-
-let animation;
+import {openGameOver, openGameCompleted} from '../actions/utilities';
+import Loop from '../Loop';
 
 class Sprite extends Component {
+    constructor () {
+        super();
+        this.Loop = new Loop();
+    };
 
     componentDidMount () {
-        this.loop();
+        this.Loop.subscribe(this.loop);
+        this.Loop.start();
     };
 
     componentWillUnmount () {
-        cancelAnimationFrame(animation)
+        this.Loop.stop();
     };
 
-    loop () {
+    loop = () => {
         //adding movement
         if (this.props.keys['ArrowRight'] && this.props.x<779) {store.dispatch(changeSpriteX(5))}
         if (this.props.keys['ArrowLeft'] && this.props.x>0) {store.dispatch(changeSpriteX(-5))}
@@ -40,15 +44,23 @@ class Sprite extends Component {
         //adding collision
         this.props.enemies.forEach((enemy) => {
             if (this.props.level===enemy.level) {
-                if (this.props.x+20>enemy.x && this.props.x-20<enemy.x &&
-                    this.props.y+20>enemy.y && this.props.y-20<enemy.y) {
-                    store.dispatch(openGameOver());
-                    store.dispatch(refreshSprite());
-                    store.dispatch(refreshLevel());
-            }
+                if (enemy.id.split('_')[0] === 'long') {
+                    if (this.props.x+20>enemy.x && this.props.x-20<enemy.x &&
+                        this.props.y+20>enemy.y && this.props.y-60<enemy.y) {
+                        store.dispatch(openGameOver());
+                        store.dispatch(refreshSprite());
+                        store.dispatch(refreshLevel());
+                    }
+                }
+                else {
+                    if (this.props.x + 20 > enemy.x && this.props.x - 20 < enemy.x &&
+                        this.props.y + 20 > enemy.y && this.props.y - 20 < enemy.y) {
+                        store.dispatch(openGameOver());
+                        store.dispatch(refreshSprite());
+                        store.dispatch(refreshLevel());
+                    }
+                }
         }});
-
-        animation = requestAnimationFrame(this.loop.bind(this));
     };
 
     render () {
